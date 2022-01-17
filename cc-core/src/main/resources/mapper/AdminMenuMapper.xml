@@ -15,12 +15,13 @@
     <result column="create_default" jdbcType="INTEGER" property="createDefault" />
     <result column="init_default" jdbcType="INTEGER" property="initDefault" />
     <result column="front_site" jdbcType="INTEGER" property="frontSite" />
+    <result column="front_icon" jdbcType="VARCHAR" property="frontSite" />
     <result column="end_site" jdbcType="INTEGER" property="endSite" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
     id, cts, uts, menu_id, parent_id, name, path_url, path_method, menu_level, menu_order, 
-    create_default, init_default, front_site, end_site, status
+    create_default, init_default, front_site, front_icon, end_site, status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -208,12 +209,36 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectList">
+
+  <select id="selectAllMenus" resultMap="BaseResultMap">
     select
         <include refid="Base_Column_List" />
     from
         cc_admin_menu
     where
         status = 1 and menu_level = 1 order by menu_order
+  </select>
+
+  <select id="selectAllChildMenus" parameterType="java.lang.Long"  resultMap="BaseResultMap">
+    select
+        <include refid="Base_Column_List" />
+    from
+        cc_admin_menu
+    where
+        status = 1 and menu_level = 1 order by menu_order
+  </select>
+
+
+  <select id="selectUserMenus" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    id, cts, uts, menu_id, parent_id, name, path_url, path_method, menu_level, menu_order,
+    create_default, init_default, front_site, front_icon, end_site, status
+    from
+        cc_admin_menu a , cc_admin_menu_role b , cc_admin_user_role c
+    <where>
+      <if test="true"> a.id = b.menu_id and b.role_id = c.role_id and c.uid = #{uid} and a.status = 1 </if>
+      <if test="menuLevel!=null"> and menu_level = #{menuLevel,jdbcType=INTEGER} </if>
+    </where>
+     order by menu_order
   </select>
 </mapper>

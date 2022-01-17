@@ -26,6 +26,7 @@
     <result column="sip_protocol" jdbcType="VARCHAR" property="sipProtocol" />
     <result column="record" jdbcType="VARCHAR" property="record" />
     <result column="record2" jdbcType="VARCHAR" property="record2" />
+    <result column="record3" jdbcType="VARCHAR" property="record3" />
     <result column="record_time" jdbcType="BIGINT" property="recordTime" />
     <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
     <result column="hangup_cause" jdbcType="VARCHAR" property="hangupCause" />
@@ -38,7 +39,7 @@
   <sql id="Base_Column_List">
     id, cts, uts, call_id, device_id, agent_key, agent_name, device_type, cdr_type, caller, called,
     display, called_location, caller_location, call_time, ring_start_time, ring_end_time, 
-    answer_time, bridge_time, end_time, talk_time, sip_protocol, record, record2, record_time,
+    answer_time, bridge_time, end_time, talk_time, sip_protocol, record, record2, record3, record_time,
     channel_name, hangup_cause, ring_cause, sip_status, ext1, ext2, status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -126,6 +127,9 @@
       </if>
       <if test="record2 != null">
         record2,
+      </if>
+      <if test="record3 != null">
+        record3,
       </if>
       <if test="recordTime != null">
         record_time,
@@ -224,6 +228,9 @@
       </if>
       <if test="record2 != null">
         #{record2,jdbcType=VARCHAR},
+      </if>
+      <if test="record3 != null">
+        #{record3,jdbcType=VARCHAR},
       </if>
       <if test="recordTime != null">
         #{recordTime,jdbcType=BIGINT},
@@ -326,6 +333,9 @@
       <if test="record2 != null">
         record2,
       </if>
+      <if test="record3 != null">
+        record3,
+      </if>
       <if test="recordTime != null">
         record_time,
       </if>
@@ -423,6 +433,9 @@
       </if>
       <if test="record2 != null">
         #{record2,jdbcType=VARCHAR},
+      </if>
+      <if test="record3 != null">
+        record3,
       </if>
       <if test="recordTime != null">
         #{recordTime,jdbcType=BIGINT},
@@ -522,6 +535,9 @@
       </if>
       <if test="record2 != null">
         record2 = #{record2,jdbcType=VARCHAR},
+      </if>
+      <if test="record3 != null">
+        record3,
       </if>
       <if test="recordTime != null">
         record_time = #{recordTime,jdbcType=BIGINT},

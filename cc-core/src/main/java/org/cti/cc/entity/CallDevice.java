@@ -139,6 +139,11 @@ public class CallDevice implements Serializable {
     private String record2;
 
     /**
+     * 备用录音地址
+     */
+    private String record3;
+
+    /**
      * 录音开始时间
      */
     @JSONField(defaultValue = "0")
@@ -373,6 +378,14 @@ public class CallDevice implements Serializable {
 
     public void setRecord2(String record2) {
         this.record2 = record2;
+    }
+
+    public String getRecord3() {
+        return record3;
+    }
+
+    public void setRecord3(String record3) {
+        this.record3 = record3;
     }
 
     public Long getRecordTime() {

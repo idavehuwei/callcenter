@@ -29,7 +29,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new HttpRequestInteceptor(adminAccountMapper))
                 .addPathPatterns("/call/**")
                 .addPathPatterns("/config/**")
-                .excludePathPatterns("/admin/getMenus","/**/*.js", "/**/*.css", "/**/*.png");
+                .addPathPatterns("/admin/**")
+                .excludePathPatterns("/**/*.js", "/**/*.css", "/**/*.png");
     }
 
 

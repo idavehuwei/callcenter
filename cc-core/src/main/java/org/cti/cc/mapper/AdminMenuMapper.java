@@ -1,8 +1,10 @@
 package org.cti.cc.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.cti.cc.entity.AdminMenu;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AdminMenuMapper {
     int deleteByPrimaryKey(Long id);
@@ -23,12 +25,19 @@ public interface AdminMenuMapper {
      *
      * @return
      */
-    List<AdminMenu> selectAll();
+    List<AdminMenu> selectAllMenus();
 
     /**
-     *
-     * @param uid
+     * @param parentId
      * @return
      */
-    List<AdminMenu> selectList(Long uid);
+    List<AdminMenu> selectAllChildMenus(String parentId);
+
+    /**
+     * 用户菜单
+     *
+     * @param params
+     * @return
+     */
+    List<AdminMenu> selectUserMenus(Map<String, Object> params);
 }

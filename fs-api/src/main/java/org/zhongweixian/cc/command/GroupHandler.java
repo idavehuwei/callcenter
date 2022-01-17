@@ -1,6 +1,7 @@
 package org.zhongweixian.cc.command;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import org.checkerframework.checker.units.qual.C;
 import org.cti.cc.constant.Constant;
 import org.cti.cc.entity.CallDetail;
 import org.cti.cc.entity.GroupMemory;
@@ -43,6 +44,10 @@ public class GroupHandler extends BaseHandler {
      */
     private Map<Long, PriorityQueue<AgentQueue>> agentInfoMap = new ConcurrentHashMap<>();
 
+    /**
+     * 通话中坐席
+     */
+    private Map<Long, List<String>> callAgents = new ConcurrentHashMap<>();
 
     /**
      * 转接坐席线程
@@ -351,6 +356,19 @@ public class GroupHandler extends BaseHandler {
             logger.info("agent:{} not ready for group:{}", agentInfo.getAgentKey(), groupId);
             agentQueues.remove(new AgentQueue(1L, agentInfo.getAgentKey()));
             agentInfoMap.put(groupId, agentQueues);
+            if (agentInfo.getAgentState() == AgentState.TALKING) {
+                List<String> callAgentList = callAgents.get(groupId);
+                if (CollectionUtils.isEmpty(callAgentList)) {
+                    callAgentList = new ArrayList<>();
+                }
+                callAgentList.add(agentInfo.getAgentKey());
+            }
+            if (agentInfo.getAgentState() == AgentState.AFTER) {
+                List<String> callAgentList = callAgents.get(groupId);
+                if (!CollectionUtils.isEmpty(callAgentList)) {
+                    callAgentList.remove(agentInfo.getAgentKey());
+                }
+            }
         });
     }
 

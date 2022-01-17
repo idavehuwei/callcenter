@@ -7,7 +7,14 @@ import java.util.List;
 /**
  * Created by caoliang on 2022/1/6
  */
-public interface AdminService  {
+public interface AdminService {
+
+    /**
+     * 获取菜单
+     *
+     * @return
+     */
+    List<MenusPo> getAllMenus();
 
     /**
      * 获取菜单
