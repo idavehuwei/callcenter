@@ -97,6 +97,11 @@ public enum AgentState {
     AUDIO_READY_MUTE,
 
     /**
+     * 班长监控中
+     */
+    MONITOR,
+
+    /**
      * 强插中
      */
     INSERT,

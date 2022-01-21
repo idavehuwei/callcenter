@@ -26,6 +26,7 @@ import org.zhongweixian.cc.command.GroupHandler;
 import org.zhongweixian.cc.fs.FsListen;
 import org.zhongweixian.cc.tcp.TcpServer;
 import org.zhongweixian.cc.websocket.WebSocketManager;
+import org.zhongweixian.cc.websocket.handler.WsMonitorHandler;
 
 
 @EnableDiscoveryClient
@@ -46,6 +47,9 @@ public class FsApiApplication implements CommandLineRunner, ApplicationListener<
 
     @Autowired
     private GroupHandler groupHandler;
+
+    @Autowired
+    private WsMonitorHandler wsMonitorHandler;
 
     @Autowired
     private CacheService cacheService;
@@ -93,6 +97,7 @@ public class FsApiApplication implements CommandLineRunner, ApplicationListener<
         tcpServer.start();
         fsListen.start();
         groupHandler.start();
+        wsMonitorHandler.start();
     }
 
 
@@ -103,6 +108,7 @@ public class FsApiApplication implements CommandLineRunner, ApplicationListener<
         tcpServer.stop();
         fsListen.stop();
         groupHandler.stop();
+        wsMonitorHandler.stop();
     }
 
     @Bean
