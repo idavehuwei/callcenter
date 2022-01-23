@@ -8,8 +8,9 @@ import org.cti.cc.constant.Constant;
 import org.cti.cc.entity.Agent;
 import org.cti.cc.enums.ErrorCode;
 import org.cti.cc.po.*;
-import org.cti.cc.vo.AgentPreset;
-import org.cti.cc.vo.AgentVo;
+import org.cti.cc.request.AgentPreset;
+import org.cti.cc.request.AgentVo;
+import org.cti.cc.util.AuthUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -82,7 +83,7 @@ public class AgentController extends BaseController {
         }
 
         CompanyInfo companyInfo = cacheService.getCompany(agentInfo.getCompanyId());
-        String token = createToken(agentInfo.getAgentKey(), agentInfo.getId(), companyInfo.getSecretKey());
+        String token = AuthUtil.createToken(agentInfo.getAgentKey(), companyInfo.getId(), companyInfo.getSecretKey());
         agentInfo.setBeforeState(AgentState.LOGOUT);
         agentInfo.setBeforeTime(agentInfo.getLogoutTime());
         agentInfo.setStateTime(agentInfo.getLoginTime());
@@ -202,23 +203,4 @@ public class AgentController extends BaseController {
             throw new BusinessException(ErrorCode.AGENT_CALLING);
         }
     }
-
-    /**
-     * 生产token
-     *
-     * @param agentKey
-     * @param id
-     * @param secretKey
-     * @return
-     */
-    public String createToken(String agentKey, Long id, String secretKey) {
-        Long time = Instant.now().getEpochSecond();
-        Map<String, Object> params = new HashMap<>(4);
-        params.put("agentKey", agentKey);
-        params.put("id", id);
-        params.put("time", time);
-        return new HmacUtils(HmacAlgorithms.HMAC_SHA_256, secretKey).hmacHex(JSON.toJSONString(params));
-    }
-
-
 }

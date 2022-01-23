@@ -3,7 +3,7 @@ package org.cti.cc.mapper;
 import org.apache.ibatis.annotations.Param;
 import org.cti.cc.entity.SkillAgent;
 import org.cti.cc.mapper.base.BaseMapper;
-import org.cti.cc.vo.SkillAgentsVo;
+import org.cti.cc.request.SkillAgentsVo;
 
 import java.util.List;
 

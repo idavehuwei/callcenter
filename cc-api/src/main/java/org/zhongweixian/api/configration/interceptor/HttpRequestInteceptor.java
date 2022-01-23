@@ -2,8 +2,8 @@ package org.zhongweixian.api.configration.interceptor;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
-import org.cti.cc.entity.AdminAccount;
-import org.cti.cc.mapper.AdminAccountMapper;
+import org.cti.cc.entity.AdminUser;
+import org.cti.cc.mapper.AdminUserMapper;
 import org.cti.cc.po.AdminAccountInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +22,10 @@ import java.io.IOException;
 public class HttpRequestInteceptor implements HandlerInterceptor {
     private Logger logger = LoggerFactory.getLogger(HttpRequestInteceptor.class);
 
-    private AdminAccountMapper adminAccountMapper;
+    private AdminUserMapper adminUserMapper;
 
-    public HttpRequestInteceptor(AdminAccountMapper adminAccountMapper) {
-        this.adminAccountMapper = adminAccountMapper;
+    public HttpRequestInteceptor(AdminUserMapper adminUserMapper) {
+        this.adminUserMapper = adminUserMapper;
     }
 
 
@@ -89,7 +89,7 @@ public class HttpRequestInteceptor implements HandlerInterceptor {
             return true;
         }
         logger.info("username:{} , password:{}", userAndPass[0], userAndPass[1]);
-        AdminAccount adminAccount = adminAccountMapper.selectByPrimaryKey(1L);
+        AdminUser adminUser = adminUserMapper.selectByPrimaryKey(1L);
         /*if (agentInfo == null || agentInfo.getStatus() == 0 || !BcryptUtil.checkPwd(userAndPass[1], agentInfo.getPasswd())) {
             response.setStatus(401);
             response.setHeader("Content-Type", "application/json;charset=UTF-8");
@@ -120,9 +120,9 @@ public class HttpRequestInteceptor implements HandlerInterceptor {
             return false;
         }
 
-        AdminAccount adminAccount = new AdminAccount();
-        adminAccount.setCompanyId(1L);
-        PreAuthenticatedAuthenticationToken authenticationToken = new PreAuthenticatedAuthenticationToken(adminAccount, adminAccount.getPasswd(), null);
+        AdminUser adminUser = new AdminUser();
+        adminUser.setCompanyId(1L);
+        PreAuthenticatedAuthenticationToken authenticationToken = new PreAuthenticatedAuthenticationToken(adminUser, adminUser.getPasswd(), null);
         authenticationToken.setAuthenticated(true);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         return true;

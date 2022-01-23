@@ -1,17 +1,8 @@
 package org.cti.cc.mapper;
 
 import org.cti.cc.entity.AdminRole;
+import org.cti.cc.mapper.base.BaseMapper;
 
-public interface AdminRoleMapper {
-    int deleteByPrimaryKey(Long id);
+public interface AdminRoleMapper extends BaseMapper<AdminRole> {
 
-    int insert(AdminRole record);
-
-    int insertSelective(AdminRole record);
-
-    AdminRole selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(AdminRole record);
-
-    int updateByPrimaryKey(AdminRole record);
 }

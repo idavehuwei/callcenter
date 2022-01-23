@@ -1,6 +1,4 @@
-package org.cti.cc.vo;
-
-import org.hibernate.validator.constraints.Range;
+package org.cti.cc.request;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,41 +6,43 @@ import javax.validation.constraints.Size;
 /**
  * Created by caoliang on 2021/5/26
  */
-public class CompanyPhoneVo {
+public class AgentSipVo {
 
-    /**
-     * PK
-     */
     private Long id;
 
     /**
-     * 创建时间
+     *
      */
     private Long cts;
 
     /**
-     * 修改时间
+     *
      */
     private Long uts;
 
     /**
-     * 企业id
+     *
      */
     private Long companyId;
 
     /**
-     * 号码
+     *
      */
-    @NotNull
-    @Size(min = 4,max = 16,message = "号码长度必须在4-16位")
-    private String phone;
+    @NotNull(message = "sip号码不能为空")
+    @Size(min = 5, max = 16, message = "sip号码必须是5,16字符")
+    private String sip;
 
     /**
-     * 1:呼入号码,2:主叫显号,3:被叫显号
+     *
      */
-    @NotNull
-    @Range(min = 1 , max = 3 , message = "号码类型[type]错误")
-    private Integer type;
+    private Long agentId;
+
+    /**
+     *
+     */
+    @NotNull(message = "sip密码不能为空")
+    @Size(min = 8, max = 16, message = "sip密码必须是8,16字符")
+    private String sipPwd;
 
     public Long getId() {
         return id;
@@ -76,19 +76,27 @@ public class CompanyPhoneVo {
         this.companyId = companyId;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getSip() {
+        return sip;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setSip(String sip) {
+        this.sip = sip;
     }
 
-    public Integer getType() {
-        return type;
+    public Long getAgentId() {
+        return agentId;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setAgentId(Long agentId) {
+        this.agentId = agentId;
+    }
+
+    public String getSipPwd() {
+        return sipPwd;
+    }
+
+    public void setSipPwd(String sipPwd) {
+        this.sipPwd = sipPwd;
     }
 }

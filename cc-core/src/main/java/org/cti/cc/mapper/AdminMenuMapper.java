@@ -1,37 +1,19 @@
 package org.cti.cc.mapper;
 
-import org.apache.ibatis.annotations.Param;
 import org.cti.cc.entity.AdminMenu;
+import org.cti.cc.mapper.base.BaseMapper;
 
 import java.util.List;
 import java.util.Map;
 
-public interface AdminMenuMapper {
-    int deleteByPrimaryKey(Long id);
-
-    int insert(AdminMenu record);
-
-    int insertSelective(AdminMenu record);
-
-    AdminMenu selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(AdminMenu record);
-
-    int updateByPrimaryKey(AdminMenu record);
+public interface AdminMenuMapper extends BaseMapper<AdminMenu> {
 
 
     /**
-     * 查询所有菜单
-     *
+     * @param params
      * @return
      */
-    List<AdminMenu> selectAllMenus();
-
-    /**
-     * @param parentId
-     * @return
-     */
-    List<AdminMenu> selectAllChildMenus(String parentId);
+    List<AdminMenu> selectAllMenus(Map<String, Object> params);
 
     /**
      * 用户菜单

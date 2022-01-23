@@ -73,6 +73,11 @@ public class MenusPo {
     private Integer endSite;
 
     /**
+     * 用户id
+     */
+    private Long uid;
+
+    /**
      * 子节点菜单
      */
     private List<MenusPo> childs;
@@ -188,5 +193,13 @@ public class MenusPo {
 
     public void setChilds(List<MenusPo> childs) {
         this.childs = childs;
+    }
+
+    public Long getUid() {
+        return uid;
+    }
+
+    public void setUid(Long uid) {
+        this.uid = uid;
     }
 }

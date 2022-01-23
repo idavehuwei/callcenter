@@ -48,7 +48,7 @@
    </update>
 
   <!-- 删除坐席技能 -->
-  <delete id="deleteSkillAgent" parameterType="org.cti.cc.vo.SkillAgentsVo" >
+  <delete id="deleteSkillAgent" parameterType="org.cti.cc.request.SkillAgentsVo" >
      delete from cc_skill_agent where company_id = #{companyId} and skill_id = #{skillId} and agent_id in <foreach
           collection="agentIds" separator="," open="(" close=")" item="id"> #{id} </foreach>
   </delete>

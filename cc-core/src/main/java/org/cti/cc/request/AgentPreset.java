@@ -1,11 +1,9 @@
-package org.cti.cc.vo;
+package org.cti.cc.request;
 
 import org.cti.cc.po.AgentState;
 import org.hibernate.validator.constraints.Range;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * Created by caoliang on 2021/9/30

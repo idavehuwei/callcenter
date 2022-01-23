@@ -4,9 +4,9 @@ import com.github.pagehelper.PageInfo;
 import org.cti.cc.entity.Agent;
 import org.cti.cc.po.AgentInfo;
 import org.cti.cc.po.AgentSipPo;
-import org.cti.cc.vo.AgentSipVo;
-import org.cti.cc.vo.AgentVo;
-import org.cti.cc.vo.BatchAddAgentVo;
+import org.cti.cc.request.AgentSipVo;
+import org.cti.cc.request.AgentVo;
+import org.cti.cc.request.BatchAddAgentVo;
 import org.zhongweixian.api.vo.excel.AgentImportExcel;
 
 import javax.servlet.http.HttpServletResponse;

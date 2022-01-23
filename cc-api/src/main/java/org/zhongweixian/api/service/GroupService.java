@@ -2,7 +2,7 @@ package org.zhongweixian.api.service;
 
 import org.cti.cc.entity.Group;
 import org.cti.cc.po.GroupInfo;
-import org.cti.cc.vo.GroupInfoVo;
+import org.cti.cc.request.GroupInfoVo;
 
 public interface GroupService extends BaseService<Group> {
 

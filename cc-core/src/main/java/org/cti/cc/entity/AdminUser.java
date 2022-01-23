@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author caoliang
  * @date   2020/06/06
  */
-public class AdminAccount implements Serializable {
+public class AdminUser implements Serializable {
     /**
      * PK
      */
@@ -158,7 +158,7 @@ public class AdminAccount implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        AdminAccount other = (AdminAccount) that;
+        AdminUser other = (AdminUser) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getCts() == null ? other.getCts() == null : this.getCts().equals(other.getCts()))
             && (this.getUts() == null ? other.getUts() == null : this.getUts().equals(other.getUts()))

@@ -1,4 +1,4 @@
-package org.cti.cc.vo;
+package org.cti.cc.request;
 
 import javax.validation.constraints.NotNull;
 

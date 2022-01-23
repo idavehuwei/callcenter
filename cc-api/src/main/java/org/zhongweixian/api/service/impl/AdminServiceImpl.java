@@ -1,57 +1,72 @@
 package org.zhongweixian.api.service.impl;
 
-import org.apache.commons.lang3.StringUtils;
+import org.cti.cc.entity.AdminUser;
 import org.cti.cc.entity.AdminMenu;
+import org.cti.cc.enums.ErrorCode;
+import org.cti.cc.mapper.AdminUserMapper;
 import org.cti.cc.mapper.AdminMenuMapper;
+import org.cti.cc.mapper.base.BaseMapper;
+import org.cti.cc.po.CompanyInfo;
 import org.cti.cc.po.MenusPo;
+import org.cti.cc.request.AdminLogin;
+import org.cti.cc.util.AuthUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.zhongweixian.api.exception.BusinessException;
 import org.zhongweixian.api.service.AdminService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by caoliang on 2022/1/7
  */
 @Service
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl extends BaseServiceImpl<AdminUser> implements AdminService {
 
     @Autowired
     private AdminMenuMapper adminMenuMapper;
 
+    @Autowired
+    private AdminUserMapper adminUserMapper;
+
+
     @Override
-    public List<MenusPo> getAllMenus() {
-        List<MenusPo> menusPoList = new ArrayList<>();
-        List<AdminMenu> adminMenus = adminMenuMapper.selectAllMenus();
-        if (CollectionUtils.isEmpty(adminMenus)) {
-            return menusPoList;
+    public String login(AdminLogin adminLogin) {
+        AdminUser adminUser = adminUserMapper.adminLogin(adminLogin.getUsername());
+        if (adminUser == null) {
+            throw new BusinessException(ErrorCode.ACCOUNT_ERROR);
         }
-        for (AdminMenu adminMenu : adminMenus) {
-            List<MenusPo> menus = menuIterator(adminMenu);
-            if (!CollectionUtils.isEmpty(menus)) {
-                menusPoList.addAll(menus);
-            }
+        if (adminUser.getStatus() == 0) {
+            throw new BusinessException(ErrorCode.ACCOUNT_DISABLED);
         }
-        return menusPoList;
+        CompanyInfo companyInfo = companyMapper.selectById(adminUser.getCompanyId());
+
+
+        String token = AuthUtil.createToken(adminUser.getUsername(), adminUser.getCompanyId(), companyInfo.getSecretKey());
+
+
+        return null;
+    }
+
+    @Override
+    public List<MenusPo> getAllMenus(Long uid) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("uid", uid);
+        params.put("menuLevel", 1);
+        return allMenuIterator(params);
     }
 
     @Override
     public List<MenusPo> getMenus(Long uid) {
-        List<MenusPo> menusPoList = new ArrayList<>();
-        List<AdminMenu> adminMenus = adminMenuMapper.selectUserMenus(uid);
-        if (CollectionUtils.isEmpty(adminMenus)) {
-            return menusPoList;
-        }
-        for (AdminMenu adminMenu : adminMenus) {
-            List<MenusPo> menus = menuIterator(adminMenu, uid);
-            if (!CollectionUtils.isEmpty(menus)) {
-                menusPoList.addAll(menus);
-            }
-        }
-        return menusPoList;
+        Map<String, Object> params = new HashMap<>();
+        params.put("uid", uid);
+        params.put("menuLevel", 1);
+        return userMenuIterator(params);
     }
 
     @Override
@@ -64,29 +79,43 @@ public class AdminServiceImpl implements AdminService {
         return 0;
     }
 
-
-    /**
-     * 递归获取菜单
-     *
-     * @param menu
-     * @return
-     */
-    private List<MenusPo> menuIterator(AdminMenu menu) {
-        List<AdminMenu> adminMenus = adminMenuMapper.selectAllChildMenus(menu.getMenuId());
-        List<MenusPo> menusPoList = new ArrayList<>();
-        MenusPo menusPo = new MenusPo();
+    private List<MenusPo> userMenuIterator(Map<String, Object> params) {
+        List<AdminMenu> adminMenus = adminMenuMapper.selectUserMenus(params);
         if (CollectionUtils.isEmpty(adminMenus)) {
-            BeanUtils.copyProperties(menu, menusPo);
-            menusPoList.add(menusPo);
-            return menusPoList;
+            return null;
         }
-        BeanUtils.copyProperties(menu, menusPo);
+        List<MenusPo> menusPoList = new ArrayList<>();
         for (AdminMenu child : adminMenus) {
             MenusPo childPo = new MenusPo();
+            params.put("parentId", child.getMenuId());
+            params.remove("menuLevel");
             BeanUtils.copyProperties(child, childPo);
-            menusPo.setChilds(menuIterator(child));
-            menusPoList.add(menusPo);
+            childPo.setChilds(userMenuIterator(params));
+            menusPoList.add(childPo);
         }
         return menusPoList;
+    }
+
+    private List<MenusPo> allMenuIterator(Map<String, Object> params) {
+        List<AdminMenu> adminMenus = adminMenuMapper.selectAllMenus(params);
+        if (CollectionUtils.isEmpty(adminMenus)) {
+            return null;
+        }
+        List<MenusPo> menusPoList = new ArrayList<>();
+        for (AdminMenu child : adminMenus) {
+            MenusPo childPo = new MenusPo();
+            params.put("parentId", child.getMenuId());
+            params.remove("menuLevel");
+            BeanUtils.copyProperties(child, childPo);
+            childPo.setUid(Long.parseLong(child.getStatus().toString()));
+            childPo.setChilds(allMenuIterator(params));
+            menusPoList.add(childPo);
+        }
+        return menusPoList;
+    }
+
+    @Override
+    BaseMapper<AdminUser> baseMapper() {
+        return adminUserMapper;
     }
 }

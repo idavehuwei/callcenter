@@ -16,7 +16,7 @@ import org.cti.cc.enums.Direction;
 import org.cti.cc.enums.NextType;
 import org.cti.cc.po.*;
 import org.cti.cc.util.DateTimeUtil;
-import org.cti.cc.vo.AgentPreset;
+import org.cti.cc.request.AgentPreset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;

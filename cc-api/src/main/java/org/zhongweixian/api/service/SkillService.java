@@ -2,9 +2,9 @@ package org.zhongweixian.api.service;
 
 import org.cti.cc.entity.Skill;
 import org.cti.cc.po.SkillInfo;
-import org.cti.cc.vo.SkillAgentVo;
-import org.cti.cc.vo.SkillAgentsVo;
-import org.cti.cc.vo.SkillVo;
+import org.cti.cc.request.SkillAgentVo;
+import org.cti.cc.request.SkillAgentsVo;
+import org.cti.cc.request.SkillVo;
 
 /**
  * Created by caoliang on 2021/10/1

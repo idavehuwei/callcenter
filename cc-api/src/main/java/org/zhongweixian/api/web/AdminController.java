@@ -19,15 +19,21 @@ public class AdminController extends BaseController {
     private AdminService adminService;
 
     /**
-     * 获取菜单
+     * 获取所有菜单
      *
      * @return
      */
     @GetMapping("getAllMenus")
     public CommonResponse getAllMenus(@ModelAttribute("adminAccountInfo") AdminAccountInfo adminAccountInfo) {
-        return new CommonResponse(adminService.getMenus(1L));
+        return new CommonResponse(adminService.getAllMenus(adminAccountInfo.getBindCompanyId()));
     }
 
+    /**
+     * 登录获取菜单
+     *
+     * @param adminAccountInfo
+     * @return
+     */
     @GetMapping("getMenus")
     public CommonResponse getMenus(@ModelAttribute("adminAccountInfo") AdminAccountInfo adminAccountInfo) {
         return new CommonResponse(adminService.getMenus(adminAccountInfo.getBindCompanyId()));

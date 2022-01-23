@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.cti.cc.mapper.AdminAccountMapper">
-  <resultMap id="BaseResultMap" type="org.cti.cc.entity.AdminAccount">
+<mapper namespace="org.cti.cc.mapper.AdminUserMapper">
+  <resultMap id="BaseResultMap" type="org.cti.cc.entity.AdminUser">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="cts" jdbcType="BIGINT" property="cts" />
     <result column="uts" jdbcType="BIGINT" property="uts" />
@@ -24,7 +24,7 @@
     delete from cc_admin_account
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="org.cti.cc.entity.AdminAccount">
+  <insert id="insert" parameterType="org.cti.cc.entity.AdminUser">
     insert into cc_admin_account (id, cts, uts, company_id, 
       username, passwd, user_type, 
       status)
@@ -32,7 +32,7 @@
       #{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="org.cti.cc.entity.AdminAccount">
+  <insert id="insertSelective" parameterType="org.cti.cc.entity.AdminUser">
     insert into cc_admin_account
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -87,7 +87,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.cti.cc.entity.AdminAccount">
+  <update id="updateByPrimaryKeySelective" parameterType="org.cti.cc.entity.AdminUser">
     update cc_admin_account
     <set>
       <if test="cts != null">
@@ -114,7 +114,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.cti.cc.entity.AdminAccount">
+  <update id="updateByPrimaryKey" parameterType="org.cti.cc.entity.AdminUser">
     update cc_admin_account
     set cts = #{cts,jdbcType=BIGINT},
       uts = #{uts,jdbcType=BIGINT},
@@ -125,4 +125,8 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="adminLogin"  parameterType="String" resultMap="BaseResultMap" >
+        select <include refid="Base_Column_List" />  from cc_admin_account where username = #{username,jdbcType=VARCHAR}
+  </select>
 </mapper>

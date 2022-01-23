@@ -2,7 +2,7 @@ package org.cti.cc.po;
 
 import org.cti.cc.entity.Agent;
 import org.cti.cc.entity.SkillAgent;
-import org.cti.cc.vo.AgentPreset;
+import org.cti.cc.request.AgentPreset;
 
 import java.util.List;
 

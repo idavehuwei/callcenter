@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.zhongweixian.api.exception.BusinessException;
 import org.zhongweixian.api.service.DisplayService;
-import org.cti.cc.vo.CompanyPhoneVo;
-import org.cti.cc.vo.DisplayGroupVo;
+import org.cti.cc.request.CompanyPhoneVo;
+import org.cti.cc.request.DisplayGroupVo;
 
 import java.time.Instant;
 import java.util.HashMap;

@@ -250,7 +250,7 @@ public class WebSocketHandler implements ConnectionListener {
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
             }
-        }, 10, 2, TimeUnit.SECONDS);
+        }, 10, 5, TimeUnit.SECONDS);
     }
 
     /**
